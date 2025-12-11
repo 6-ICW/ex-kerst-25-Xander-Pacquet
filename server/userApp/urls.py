@@ -9,3 +9,7 @@ urlpatterns = [
     path("check/<int:id>",views.controle),
     path("userUpdateWw/<int:id>",views.userWachtwoordUpdaten),
 ]
+
+# is het niet riskant om de id mee te geven via een url om te verwijderen?
+# Waarom moet je bij 'check' een id mee geven?  
+# Je schreef al een update, waarom dan nog een userUpdateWw? 

@@ -8,11 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def getAll(request):
+    # zelf ervoor dat je telkens ook het ID mee vraag
     all_useres = User.objects.all().values("login")
     return JsonResponse(list(all_useres),safe=False)
 
 @csrf_exempt
 def addUser(request):
+    # bij gebruik van defaults kan je hier wat input verminderen
     post_user = json.loads(request.body.decode("utf-8"))
     newUser = User()
     newUser.login = post_user["login"]
@@ -32,6 +34,8 @@ def deleteUser(request,id):
 
 @csrf_exempt
 def updateUser(request,id):
+    # je moet hier telkens een volledige user mee geven om up te daten. 
+    # denk na of dit echt nodig is. 
     oneUser = User.objects.get(pk=id)
     updateData = json.loads(request.body.decode("utf-8"))
     oneUser.login = updateData["login"]
@@ -44,9 +48,14 @@ def updateUser(request,id):
 
 @csrf_exempt
 def controle(request,id):
+    # wat controleer je hier precies? 
+    # wat doet de functie check() met het queryObject?
     oneUser = User.objects.get(pk=id).check()
     return JsonResponse(model_to_dict(oneUser),safe=False)
 
+
+# deze functie werkt, maar is dus eigenlijk overbodig aangezien
+# je al een andere updatefunctie schreef. 
 @csrf_exempt
 def userWachtwoordUpdaten(request,id):
     oneUser = User.objects.get(pk=id)
